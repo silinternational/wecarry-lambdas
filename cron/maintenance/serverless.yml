@@ -27,8 +27,7 @@ package:
   exclude:
     - ./**
   include:
-    - ./bin/**
-    - ./config.json
+    - ../../bin/**
 
 functions:
   cron:
