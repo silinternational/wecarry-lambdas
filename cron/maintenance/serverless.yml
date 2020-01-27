@@ -32,6 +32,6 @@ package:
 
 functions:
   cron:
-    handler: bin/main
+    handler: bin/maintenance
     events:
       - schedule: cron(* * * * ? *)
