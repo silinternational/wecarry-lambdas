@@ -1,0 +1,10 @@
+app:
+  build:
+    dockerfile_path: Dockerfile
+  encrypted_env_file: aws.env.encrypted
+  cached: true
+  working_dir: /go/src/buildspace
+
+lambda:
+  image: silintl/awsops:latest
+  encrypted_env_file: aws.env.encrypted
