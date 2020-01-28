@@ -28,8 +28,6 @@ func handler(lambdaConfig LambdaConfig) error {
 	log.Println("WeCarry API Maintenance started at", now.Format(time.RFC1123Z))
 
 	url := os.Getenv("SERVICE_INTEGRATION_URL") + "/service"
-	log.Println("SERVICE_INTEGRATION_URL =", url)
-
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Println("failed to create new Request,", err)
@@ -41,7 +39,7 @@ func handler(lambdaConfig LambdaConfig) error {
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
-		log.Println("error making HTTP request,", err)
+		log.Printf("error making HTTP request to %s, %s", url, err)
 		return nil
 	}
 
