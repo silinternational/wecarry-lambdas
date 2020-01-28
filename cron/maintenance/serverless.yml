@@ -18,6 +18,8 @@ provider:
   environment:
     stage: ${self:custom.stage}
     region: ${self:custom.region}
+    SERVICE_INTEGRATION_URL: ${env:SERVICE_INTEGRATION_URL}
+    SERVICE_INTEGRATION_TOKEN: ${env:SERVICE_INTEGRATION_TOKEN}
 
 custom:
   stage: ${opt:stage, self:provider.stage}
