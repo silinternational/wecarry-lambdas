@@ -25,11 +25,14 @@ func handler(lambdaConfig LambdaConfig) error {
 	log.SetFlags(0)
 
 	now := time.Now().UTC()
-	log.Printf("WeCarry API Maintenance started at %s", now.Format(time.RFC1123Z))
+	log.Println("WeCarry API Maintenance started at", now.Format(time.RFC1123Z))
 
-	request, err := http.NewRequest("GET", os.Getenv("SERVICE_INTEGRATION_URL") + "/site/status", nil)
+	url := os.Getenv("SERVICE_INTEGRATION_URL") + "/site/status"
+	log.Println("SERVICE_INTEGRATION_URL =", url)
+
+	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		log.Println(err)
+		log.Println("failed to create new Request,", err)
 		return nil
 	}
 
@@ -38,19 +41,20 @@ func handler(lambdaConfig LambdaConfig) error {
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
-		log.Println(err)
+		log.Println("error making HTTP request,", err)
+		return nil
 	}
 
 	if response.StatusCode >= 300 {
-		log.Printf("unexpected HTTP response code: %s", response.Status)
+		log.Println("unexpected HTTP response code,", response.Status)
 	}
 
 	responseBytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		log.Printf("error reading response body: %s", err.Error())
+		log.Println("error reading response body,", err)
 		return nil
 	}
-	log.Printf("response body: %s", string(responseBytes))
-	
+	log.Println("response body:", string(responseBytes))
+
 	return nil
 }
