@@ -35,4 +35,4 @@ functions:
   cron:
     handler: bin/maintenance
     events:
-      - schedule: cron(* * * * ? *)
+      - schedule: cron(30 * * * ? *)

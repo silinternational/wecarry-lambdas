@@ -27,7 +27,7 @@ func handler(lambdaConfig LambdaConfig) error {
 	now := time.Now().UTC()
 	log.Println("WeCarry API Maintenance started at", now.Format(time.RFC1123Z))
 
-	url := os.Getenv("SERVICE_INTEGRATION_URL") + "/site/status"
+	url := os.Getenv("SERVICE_INTEGRATION_URL") + "/service"
 	log.Println("SERVICE_INTEGRATION_URL =", url)
 
 	request, err := http.NewRequest("GET", url, nil)
