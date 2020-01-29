@@ -8,7 +8,7 @@ provider:
   runtime: go1.x
   timeout: 240
   versionFunctions: false
-  memorySize: 64
+  memorySize: 128
 
   # you can overwrite defaults here
   #  stage: dev
@@ -18,6 +18,8 @@ provider:
   environment:
     stage: ${self:custom.stage}
     region: ${self:custom.region}
+    SERVICE_INTEGRATION_URL: ${env:SERVICE_INTEGRATION_URL}
+    SERVICE_INTEGRATION_TOKEN: ${env:SERVICE_INTEGRATION_TOKEN}
 
 custom:
   stage: ${opt:stage, self:provider.stage}
@@ -27,11 +29,10 @@ package:
   exclude:
     - ./**
   include:
-    - ./bin/**
-    - ./config.json
+    - ../../bin/**
 
 functions:
   cron:
-    handler: bin/main
+    handler: bin/maintenance
     events:
-      - schedule: cron(* * * * ? *)
+      - schedule: cron(30 * * * ? *)

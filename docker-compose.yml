@@ -9,6 +9,6 @@ services:
     env_file:
       - .env
     volumes:
-      - ./:/go/src/buildspace
-    working_dir: /go/src/buildspace
+      - ./:/build
+    working_dir: /build
     command: ["bash"]

@@ -11,8 +11,5 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export SERVICE_INTEGRATION_URL="${PROD_SERVICE_INTEGRATION_URL}"
 export SERVICE_INTEGRATION_TOKEN="${PROD_SERVICE_INTEGRATION_TOKEN}"
 
-cd api/admin
-serverless deploy -v --stage prod
-
-cd ../agent
+cd cron/maintenance
 serverless deploy -v --stage prod
