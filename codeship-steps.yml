@@ -1,7 +1,7 @@
-- name: deploy_dev
+- name: deploy_stg
   service: app
   tag: develop
-  command: ./codeship/deploy-dev.sh
+  command: ./codeship/deploy-stg.sh
 
 - name: deploy_prod
   service: app
