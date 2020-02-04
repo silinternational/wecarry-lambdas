@@ -31,9 +31,9 @@ func handler(lambdaConfig LambdaConfig) error {
 	tasks := []string{"file_cleanup", "token_cleanup"}
 	for _, t := range tasks {
 		url := os.Getenv("SERVICE_INTEGRATION_URL") + "/service"
-		log.Print("running task: " + t)
+		log.Println("running task: " + t)
 		if err := runTask(url, t); err != nil {
-			log.Print(err.Error())
+			log.Println(err.Error())
 		}
 	}
 
