@@ -1,3 +1,7 @@
+- name: test
+  service: app
+  command: ./codeship/test.sh
+
 - name: deploy_stg
   service: app
   tag: develop
