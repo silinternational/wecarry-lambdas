@@ -12,6 +12,8 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
+const ApiTimeout = 10 * time.Second
+
 type LambdaConfig struct {
 	ConfigPath string
 }
@@ -49,7 +51,9 @@ func runTask(url, task string) error {
 
 	request.Header.Set("Authorization", "Bearer "+os.Getenv("SERVICE_INTEGRATION_TOKEN"))
 
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: ApiTimeout,
+	}
 	response, err := client.Do(request)
 	if err != nil {
 		return errors.New("error making HTTP request to " + url + ", " + err.Error())
