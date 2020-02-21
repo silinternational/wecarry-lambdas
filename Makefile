@@ -1,5 +1,5 @@
 build:
-	docker-compase run app ./codeship/build.sh
+	docker-compose run app ./codeship/build.sh
 
 shell:
 	docker-compose run app bash
