@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"bytes"
+	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -10,6 +11,8 @@ import (
 
 	"github.com/aws/aws-lambda-go/lambda"
 )
+
+const ApiTimeout = 10 * time.Second
 
 type LambdaConfig struct {
 	ConfigPath string
@@ -27,20 +30,33 @@ func handler(lambdaConfig LambdaConfig) error {
 	now := time.Now().UTC()
 	log.Println("WeCarry API Maintenance started at", now.Format(time.RFC1123Z))
 
-	url := os.Getenv("SERVICE_INTEGRATION_URL") + "/service"
-	request, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		log.Println("failed to create new Request,", err)
-		return nil
+	tasks := []string{"file_cleanup", "token_cleanup"}
+	for _, t := range tasks {
+		url := os.Getenv("SERVICE_INTEGRATION_URL") + "/service"
+		log.Println("running task: " + t)
+		if err := runTask(url, t); err != nil {
+			log.Println(err.Error())
+		}
 	}
 
-	request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", os.Getenv("SERVICE_INTEGRATION_TOKEN")))
+	return nil
+}
 
-	client := &http.Client{}
+func runTask(url, task string) error {
+	requestBody := `{"task":"` + task + `"}`
+	request, err := http.NewRequest("POST", url, bytes.NewBufferString(requestBody))
+	if err != nil {
+		return errors.New("failed to create new Request, " + err.Error())
+	}
+
+	request.Header.Set("Authorization", "Bearer "+os.Getenv("SERVICE_INTEGRATION_TOKEN"))
+
+	client := &http.Client{
+		Timeout: ApiTimeout,
+	}
 	response, err := client.Do(request)
 	if err != nil {
-		log.Printf("error making HTTP request to %s, %s", url, err)
-		return nil
+		return errors.New("error making HTTP request to " + url + ", " + err.Error())
 	}
 
 	if response.StatusCode >= 300 {
@@ -49,10 +65,9 @@ func handler(lambdaConfig LambdaConfig) error {
 
 	responseBytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
-		log.Println("error reading response body,", err)
-		return nil
+		return errors.New("error reading response body, " + err.Error())
 	}
-	log.Println("response body:", string(responseBytes))
 
+	log.Println("response body:", string(responseBytes))
 	return nil
 }
