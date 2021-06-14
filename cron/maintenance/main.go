@@ -30,7 +30,7 @@ func handler(lambdaConfig LambdaConfig) error {
 	now := time.Now().UTC()
 	log.Println("WeCarry API Maintenance started at", now.Format(time.RFC1123Z))
 
-	tasks := []string{"file_cleanup", "token_cleanup"}
+	tasks := []string{"file_cleanup", "token_cleanup", "location_cleanup"}
 	for _, t := range tasks {
 		url := os.Getenv("SERVICE_INTEGRATION_URL") + "/service"
 		log.Println("running task: " + t)
