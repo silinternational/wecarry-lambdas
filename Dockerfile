@@ -1,7 +1,7 @@
 FROM golang:latest
 
 # Install packages
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y git nodejs netcat
 
 # Copy in source and install deps
