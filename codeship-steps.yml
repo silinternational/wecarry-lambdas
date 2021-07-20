@@ -11,3 +11,8 @@
   service: app
   tag: master
   command: ./codeship/deploy-prod.sh
+
+- name: track_deployment
+  service: tracker
+  tag: main
+  command: "true"
