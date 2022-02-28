@@ -1,7 +1,6 @@
-# For full config options, check the docs:
-#    docs.serverless.com
-
 service: wecarry-lambdas
+
+frameworkVersion: ^3.2.0
 
 provider:
   name: aws

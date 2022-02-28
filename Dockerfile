@@ -1,12 +1,8 @@
 FROM golang:latest
 
-# Install packages
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y git nodejs netcat
+RUN curl -o- -L https://slss.io/install | VERSION=3.3.0 bash
 
 # Copy in source and install deps
-COPY ./package.json /build
-WORKDIR /
-RUN npm install -g serverless && npm install
+WORKDIR /src
 COPY ./ /src/
 RUN go get ./...
