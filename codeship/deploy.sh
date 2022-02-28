@@ -30,5 +30,4 @@ else
 fi
 
 echo "Deploying stage $1..."
-cd cron/maintenance
 $HOME/.serverless/bin/serverless deploy --verbose --stage "$1"
