@@ -3,12 +3,9 @@ version: "3"
 services:
 
   app:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    build: .
     env_file:
       - .env
     volumes:
-      - ./:/build
-    working_dir: /build
-    command: ["bash"]
+      - ./:/src
+    command: ./codeship/build.sh

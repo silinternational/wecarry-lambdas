@@ -5,12 +5,12 @@
 - name: deploy_stg
   service: app
   tag: develop
-  command: ./codeship/deploy-stg.sh
+  command: ./codeship/deploy.sh stg
 
 - name: deploy_prod
   service: app
-  tag: master
-  command: ./codeship/deploy-prod.sh
+  tag: main
+  command: ./codeship/deploy.sh prod
 
 - name: track_deployment
   service: tracker

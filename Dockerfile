@@ -5,9 +5,8 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y git nodejs netcat
 
 # Copy in source and install deps
-RUN mkdir -p /build
 COPY ./package.json /build
-WORKDIR /build
+WORKDIR /
 RUN npm install -g serverless && npm install
-COPY ./ /build
+COPY ./ /src/
 RUN go get ./...
