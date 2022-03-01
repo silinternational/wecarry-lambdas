@@ -1,7 +1,6 @@
-# For full config options, check the docs:
-#    docs.serverless.com
-
 service: wecarry-lambdas
+
+frameworkVersion: ^3.2.0
 
 provider:
   name: aws
@@ -10,29 +9,22 @@ provider:
   versionFunctions: false
   memorySize: 128
   logRetentionInDays: 14
-  # you can overwrite defaults here
-  #  stage: dev
-  region: us-east-1
+  stage: stg
 
   # you can define service wide environment variables here
   environment:
-    stage: ${self:custom.stage}
-    region: ${self:custom.region}
     SERVICE_INTEGRATION_URL: ${env:SERVICE_INTEGRATION_URL}
     SERVICE_INTEGRATION_TOKEN: ${env:SERVICE_INTEGRATION_TOKEN}
 
-custom:
-  stage: ${opt:stage, self:provider.stage}
-  region: ${opt:region, self:provider.region}
-
 package:
-  exclude:
-    - ./**
-  include:
-    - ../../bin/**
+  patterns:
+  - '!./**'
+  - './bin/**'
 
 functions:
   cron:
     handler: bin/maintenance
     events:
-      - schedule: cron(0 4 ? * SUN *)
+    # cron(Minutes Hours Day-of-month Month Day-of-week Year)
+    # Either `day-of-month` or `day-of-week` must be a question mark (?)
+    - schedule: cron(0 4 ? * SUN *)

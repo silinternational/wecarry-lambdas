@@ -1,14 +1,17 @@
 build:
-	docker-compose run app ./codeship/build.sh
+	docker-compose up -d app
 
-shell:
-	docker-compose run app bash
+bash:
+	docker-compose run --rm app bash
 
 deploy:
-	docker-compose run app bash -c "cd cron/maintenance && sls deploy -v"
+	docker-compose run --rm app bash -c "cd cron/maintenance && sls deploy --verbose --stage stg"
 
 remove:
-	docker-compose run app sls remove
+	docker-compose run --rm app sls remove
+
+test:
+	docker-compose run --rm app ./codeship/test.sh
 
 clean:
 	docker-compose kill
