@@ -22,9 +22,16 @@ package:
   - './bin/**'
 
 functions:
-  cron:
+  maintenance:
     handler: bin/maintenance
     events:
     # cron(Minutes Hours Day-of-month Month Day-of-week Year)
     # Either `day-of-month` or `day-of-week` must be a question mark (?)
     - schedule: cron(0 4 ? * SUN *)
+
+  outdatedRequests:
+    handler: bin/outdatedrequests
+    events:
+      # cron(Minutes Hours Day-of-month Month Day-of-week Year)
+      # Either `day-of-month` or `day-of-week` must be a question mark (?)
+      - schedule: cron(0 4 ? * FRI *)
