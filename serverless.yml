@@ -34,4 +34,4 @@ functions:
     events:
       # cron(Minutes Hours Day-of-month Month Day-of-week Year)
       # Either `day-of-month` or `day-of-week` must be a question mark (?)
-      - schedule: cron(0 4 ? * FRI *)
+      - schedule: cron(0 16 ? * FRI *)
