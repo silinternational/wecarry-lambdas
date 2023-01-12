@@ -10,7 +10,10 @@ deploy:
 remove:
 	docker-compose run --rm app sls remove
 
-test:
+gosec:
+	docker-compose run --rm gosec
+
+test: gosec
 	docker-compose run --rm app ./codeship/test.sh
 
 clean:

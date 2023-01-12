@@ -9,3 +9,11 @@ services:
     volumes:
       - ./:/src
     command: ./codeship/build.sh
+
+  gosec:
+    image: securego/gosec:latest
+    volumes:
+      - ./:/src
+    # Remember to make the exclude value match the corresponding line in codeship/test.sh
+    command: ["-exclude=G104", "-quiet", "/src/..."]
+
