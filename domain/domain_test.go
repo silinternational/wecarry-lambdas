@@ -1,12 +1,13 @@
-package main
+package domain
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
-func Test_runTask(t *testing.T) {
+func Test_RunTask(t *testing.T) {
 	tests := []struct {
 		name string
 		task string
@@ -26,7 +27,7 @@ func Test_runTask(t *testing.T) {
 			}))
 			defer server.Close()
 
-			err := runTask(server.URL, tt.task)
+			err := RunTask(server.URL, tt.task, 2*time.Second)
 			if err != nil {
 				t.Error(err)
 			}
