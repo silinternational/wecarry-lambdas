@@ -11,7 +11,9 @@ import (
 	"time"
 )
 
-func RunTask(url, task string, timeout time.Duration) error {
+const defaultTimeout = time.Second * 10
+
+func RunTask(url, task string) error {
 	requestBody := `{"task":"` + task + `"}`
 	request, err := http.NewRequest("POST", url, bytes.NewBufferString(requestBody))
 	if err != nil {
@@ -21,7 +23,7 @@ func RunTask(url, task string, timeout time.Duration) error {
 	request.Header.Set("Authorization", "Bearer "+os.Getenv("SERVICE_INTEGRATION_TOKEN"))
 
 	client := &http.Client{
-		Timeout: timeout,
+		Timeout: defaultTimeout,
 	}
 	response, err := client.Do(request)
 	if err != nil {

@@ -33,7 +33,7 @@ func handler(lambdaConfig LambdaConfig) error {
 	var errs []error
 	for _, t := range tasks {
 		log.Println("running task: " + t)
-		if err := domain.RunTask(url, t, ApiTimeout); err != nil {
+		if err := domain.RunTask(url, t); err != nil {
 			log.Println(err.Error())
 			errs = append(errs, err)
 		}

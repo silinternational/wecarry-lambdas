@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 )
 
 func Test_RunTask(t *testing.T) {
@@ -27,7 +26,7 @@ func Test_RunTask(t *testing.T) {
 			}))
 			defer server.Close()
 
-			err := RunTask(server.URL, tt.task, 2*time.Second)
+			err := RunTask(server.URL, tt.task)
 			if err != nil {
 				t.Error(err)
 			}

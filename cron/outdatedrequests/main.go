@@ -31,7 +31,7 @@ func handler(lambdaConfig LambdaConfig) error {
 	task := "outdated_requests"
 
 	log.Println("running task: " + task)
-	if err := domain.RunTask(url, task, ApiTimeout); err != nil {
+	if err := domain.RunTask(url, task); err != nil {
 		log.Println(err.Error())
 		return err
 	}
