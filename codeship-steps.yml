@@ -1,3 +1,7 @@
+- name: gosec
+  service: gosec
+  command: "-exclude=G104 -quiet /src/..."
+
 - name: test
   service: app
   command: ./codeship/test.sh
@@ -16,3 +20,8 @@
   service: tracker
   tag: main
   command: "true"
+
+- name: ga4track_deployment
+  service: ga4tracker
+  tag: ^(main|develop)
+  command: sh -c "GA_EVENT_NAME=${CI_BRANCH}_wecarry_lambdas ./ga-event-tracker"
