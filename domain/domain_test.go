@@ -1,4 +1,4 @@
-package main
+package domain
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func Test_runTask(t *testing.T) {
+func Test_RunTask(t *testing.T) {
 	tests := []struct {
 		name string
 		task string
@@ -26,7 +26,7 @@ func Test_runTask(t *testing.T) {
 			}))
 			defer server.Close()
 
-			err := runTask(server.URL, tt.task)
+			err := RunTask(server.URL, tt.task)
 			if err != nil {
 				t.Error(err)
 			}

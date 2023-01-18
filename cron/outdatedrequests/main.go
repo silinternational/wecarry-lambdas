@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -26,21 +25,16 @@ func handler(lambdaConfig LambdaConfig) error {
 	log.SetFlags(0)
 
 	now := time.Now().UTC()
-	log.Println("WeCarry API Maintenance started at", now.Format(time.RFC1123Z))
+	log.Println("WeCarry API Email Notification for Outdated Requests started at", now.Format(time.RFC1123Z))
 
 	url := os.Getenv("SERVICE_INTEGRATION_URL") + "/service"
-	tasks := []string{"file_cleanup", "token_cleanup", "location_cleanup"}
-	var errs []error
-	for _, t := range tasks {
-		log.Println("running task: " + t)
-		if err := domain.RunTask(url, t); err != nil {
-			log.Println(err.Error())
-			errs = append(errs, err)
-		}
+	task := "outdated_requests"
+
+	log.Println("running task: " + task)
+	if err := domain.RunTask(url, task); err != nil {
+		log.Println(err.Error())
+		return err
 	}
 
-	if len(errs) > 0 {
-		return fmt.Errorf("error(s): %v", errs)
-	}
 	return nil
 }

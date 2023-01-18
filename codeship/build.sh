@@ -8,3 +8,4 @@ set -x
 
 # Build all the things
 go build -ldflags="-s -w" -o bin/maintenance  cron/maintenance/main.go
+go build -ldflags="-s -w" -o bin/outdatedrequests  cron/outdatedrequests/main.go
