@@ -1,3 +1,7 @@
+# Archived
+
+WeCarry has been discontinued and will not be developed further
+
 # WeCarry API Lambdas
 
 A collection of Lambda functions for the WeCarry App
